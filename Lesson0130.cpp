@@ -6,7 +6,10 @@ using namespace top;
 
 int main()
 {
-	Time t(10, 59, 00);
-	t.show_time();
+	Time t(23, 59, 21);
+	for (int i = 0; i < 5; i++) {
+		t.add_time(12, 0, 0);
+		t.show();
+	}
 }
 
