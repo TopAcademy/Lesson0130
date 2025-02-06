@@ -54,7 +54,7 @@ namespace top
 			sec = 0;
 		}
 
-		
+
 		// Constructor with args
 		// Setting time value given by arguments
 		Time(UShort h, UShort m, UShort s) : Time()
@@ -62,7 +62,7 @@ namespace top
 			set_time(h, m, s);
 		}
 
-		
+
 		// Setting time value given by arguments
 		bool set_time(UShort h, UShort m, UShort s)
 		{
@@ -74,22 +74,22 @@ namespace top
 			return true;
 		}
 
-		
+
 		// Display time value on console
 		void show()
 		{
 			cout << hour << ':'
-				 << ((min < 10) ? "0" : "") << min << ':'
-				 << ((sec < 10) ? "0" : "") << sec << '\n';
+				<< ((min < 10) ? "0" : "") << min << ':'
+				<< ((sec < 10) ? "0" : "") << sec << '\n';
 		}
 
-		
+
 		// Increment the time by 1 second
 		void inc()
 		{
 			sec++;
 			if (sec == 60) {
-				min++; 
+				min++;
 				sec = 0;
 			}
 			if (min == 60) {
@@ -109,7 +109,7 @@ namespace top
 			this->set_time_from_seconds(conv_time);
 		}
 
-		
+
 		// Add given time in  h,m,s  to object's time
 		bool add_time(UShort h, UShort m, UShort s)
 		{
@@ -119,6 +119,71 @@ namespace top
 			this->add_seconds(conv_time);
 			return true;
 		}
+
+		// Compare current object to given 
+		bool is_bigger_than(Time& t)
+		{
+			UInt s1 = this->convert_to_seconds();
+			UInt s2 = t.convert_to_seconds();
+			return (s1 > s2);
+		}
+
+	public:
+		/**********************/
+		/*    OPERATORS       */
+		/**********************/
+
+		// Operator "is bigger?"
+		bool operator > (Time& right)
+		{
+			return this->is_bigger_than(right);
+		}
+
+		// Operator +
+		Time operator + (const Time& right)
+		{
+			this->add_time(
+				right.hour, right.min, right.sec
+			);
+			return *this;
+		}
+
+		// Operator =
+		Time& operator = (const Time& right)
+		{
+			this->hour = right.hour;
+			this->min = right.min;
+			this->sec = right.sec;
+			return *this;
+		}
+
+		// Operator += Time
+		Time& operator += (const Time& right)
+		{
+			*this = *this + right;
+			return *this;
+		}
+
+		// Operator += seconds
+		Time& operator += (int right)
+		{
+			this->add_seconds(right);
+			return *this;
+		}
+
+		//pre-inc operator
+		Time& operator++() {
+			this->inc();
+			return *this;
+		}
+		//post-inc operator
+		Time operator++(int) {
+			Time temp = *this;
+			this->inc();
+			return temp;
+		}
+
+
 
 
 	}; // end of class `Time`
